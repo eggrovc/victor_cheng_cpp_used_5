@@ -4,22 +4,20 @@ Group 2 = 9; photos: p10, p12, p15, p16, p17, p19, p4, p6,
 Group 3 = 6; photos: p11, p14, p18, p20, p3, 
 
 # Running Time: 
-472 microseconds.
+146 microseconds.
 
 -------------------------- 
 
---- Algorithm 1 (Re-visits Allowed) ---
-Shortest path from d to i via a:
-  Distance: 40
-  Path:     d -> g -> e -> a -> i
-Shortest path from f to g via a:
-  Distance: 32
-  Path:     f -> e -> a -> e -> g
+Algorithm 1: Shortest path from d to i with capital a:
+Shortest Path: d, f, j, a, i
+Shortest distance: 42
 
-Algorithm 1 Preprocessing Time: 56670 nanoseconds.
+Algorithm 1: Shortest path from f to g with capital a:
+Shortest Path: f, j, a, g
+Shortest distance: 41
 
 # Running Time: 
-109 microseconds.
+634 microseconds.
 
 -------------------------- 
 

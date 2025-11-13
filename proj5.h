@@ -15,8 +15,6 @@ using namespace std;
 #include <set>
 #include <algorithm>
 #include <queue>
-#include <limits>
-#include <list>
 
 struct DisjointSet {
     map<string, string> parent;
@@ -57,6 +55,10 @@ class Proj5 {
         void q1read(string& input);
         void q2read(string& input);
 
+        void runDijkstra(string source);
+        void reconstructPath(string source, string target);
+        void q2aAlg(string start, string end);
+
         // Questions
         void q1(ofstream& outfile); 
         void q2a(ofstream& outfile); 
@@ -71,8 +73,8 @@ class Proj5 {
         string capital = "a";
 
         map<string, int> shortestPaths;
-        
-
+        vector<string> newPath;
+        vector<string> alg1;
 
         void stringAddEdge(string u, string v, int weight) {
             stringAdjGraph[u].push_back({v, weight});

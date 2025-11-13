@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
     end = chrono::high_resolution_clock::now();
     duration = chrono::duration_cast<chrono::microseconds>(end - start);
     
-    outFile << endl << "# Running Time: " << endl << duration.count() << " microseconds." << endl; ;
+    outFile << "# Running Time: " << endl << duration.count() << " microseconds." << endl; ;
 
     outFile << endl << "-------------------------- " << endl << endl;
 
