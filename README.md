@@ -15,7 +15,7 @@ Group 3 = 6; photos: p11, p14, p18, p20, p3, p7
 176 microseconds.
 
 ### Q2a
-On this question, I also initialized my graph using an adjancey list. Then using Dijkstra, first to find the minimum path from my source vertex to the capital and then from the capital to my end vertex this is done by using a min priority queue that stores weights. Then reconstructing the path in reverse order to get the full path. This is done in O(nlogn) time while allowing cities to be visited more than once. 
+On this question, I also initialized my graph using an adjacencey list. Then using Dijkstra, first to find the minimum path from my source vertex to the capital and then from the capital to my end vertex this is done by using a min priority queue that stores weights. Then reconstructing the path in reverse order to get the full path. This is done in O(nlogn) time while allowing cities to be visited more than once. 
 
 It first initializes a map that represents the distances between nodes and sets it all to infinity besides our source distance d. Then using a priority queue we are able to check every neighboring node of our t node to see if its weight is optimal. This is then done again with the capital node and the end one. Then to actually find the full path, we reverse through starting at end node using our tracked neighboring weights equal the weight we saved at that spot.
 
@@ -46,3 +46,5 @@ Shortest distance: 41
 
 # Running Time: 
 533 microseconds.
+
+### TODO: To run the program simply type make in terminal.
