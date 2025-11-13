@@ -1,0 +1,25 @@
+Three group of photos:
+Group 1 = 5; photos: p1, p13, p2, p5, 
+Group 2 = 9; photos: p10, p12, p15, p16, p17, p19, p4, p6, 
+Group 3 = 6; photos: p11, p14, p18, p20, p3, 
+
+# Running Time: 
+472 microseconds.
+
+-------------------------- 
+
+--- Algorithm 1 (Re-visits Allowed) ---
+Shortest path from d to i via a:
+  Distance: 40
+  Path:     d -> g -> e -> a -> i
+Shortest path from f to g via a:
+  Distance: 32
+  Path:     f -> e -> a -> e -> g
+
+Algorithm 1 Preprocessing Time: 56670 nanoseconds.
+
+# Running Time: 
+109 microseconds.
+
+-------------------------- 
+
