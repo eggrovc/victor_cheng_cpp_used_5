@@ -56,16 +56,16 @@ int main(int argc, char* argv[]) {
     outFile << endl << "-------------------------- " << endl << endl;
 
     // Part B
-    // start = chrono::high_resolution_clock::now();
+    start = chrono::high_resolution_clock::now();
 
-    // hw.q2(outFile); 
+    hw.q2b(outFile); 
      
-    // end = chrono::high_resolution_clock::now();
-    // duration = chrono::duration_cast<chrono::microseconds>(end - start);
+    end = chrono::high_resolution_clock::now();
+    duration = chrono::duration_cast<chrono::microseconds>(end - start);
     
-    // outFile << endl << "# Running Time: " << endl << duration.count() << " microseconds." << endl; ;
+    outFile << endl << "# Running Time: " << endl << duration.count() << " microseconds." << endl; ;
 
-    // outFile << endl << "-------------------------- " << endl << endl;
+    outFile << endl << "-------------------------- " << endl << endl;
     return 0;
 
 }

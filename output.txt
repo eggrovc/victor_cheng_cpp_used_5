@@ -1,10 +1,10 @@
 Three group of photos:
-Group 1 = 5; photos: p1, p13, p2, p5, 
-Group 2 = 9; photos: p10, p12, p15, p16, p17, p19, p4, p6, 
-Group 3 = 6; photos: p11, p14, p18, p20, p3, 
+Group 1 = 5; photos: p1, p13, p2, p5, p9
+Group 2 = 9; photos: p10, p12, p15, p16, p17, p19, p4, p6, p8
+Group 3 = 6; photos: p11, p14, p18, p20, p3, p7
 
 # Running Time: 
-146 microseconds.
+173 microseconds.
 
 -------------------------- 
 
@@ -17,7 +17,21 @@ Shortest Path: f, j, a, g
 Shortest distance: 41
 
 # Running Time: 
-634 microseconds.
+641 microseconds.
+
+-------------------------- 
+
+Algorithm 2: Shortest path from d to i with capital a (no repeated cities):
+Shortest Path: d, f, j, a, i
+Shortest distance: 42
+
+Algorithm 2: Shortest path from f to g with capital a (no repeated cities):
+Shortest Path: f, j, a, g
+Shortest distance: 41
+
+
+# Running Time: 
+135 microseconds.
 
 -------------------------- 
 

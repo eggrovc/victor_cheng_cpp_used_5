@@ -55,14 +55,19 @@ class Proj5 {
         void q1read(string& input);
         void q2read(string& input);
 
+        // Part B2a
         void runDijkstra(string source);
         void reconstructPath(string source, string target);
         void q2aAlg(string start, string end);
 
+        // Part B2b
+        void q2bAlg(string start, string end);
+        void removeNodesFromGraph(const vector<string>& nodesToRemove, map<string, vector<pair<string, int>>>& graph);
+
         // Questions
         void q1(ofstream& outfile); 
         void q2a(ofstream& outfile); 
-        // void q2b(ofstream& outfile);
+        void q2b(ofstream& outfile);
 
 
     private:
@@ -75,6 +80,8 @@ class Proj5 {
         map<string, int> shortestPaths;
         vector<string> newPath;
         vector<string> alg1;
+
+        vector<string> alg2;
 
         void stringAddEdge(string u, string v, int weight) {
             stringAdjGraph[u].push_back({v, weight});

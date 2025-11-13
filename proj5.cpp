@@ -78,6 +78,7 @@ void Proj5::q2read(string& input) {
     // printGraph();
 }
 
+// Part B2a Helper Functions
 void Proj5::runDijkstra(string source) {
     shortestPaths.clear();
     
@@ -193,7 +194,7 @@ void Proj5::q2aAlg(string start, string end) {
     // Combine paths and store in alg1
     alg1.clear();
 
-    for (const auto& node : path1) {
+    for (auto& node : path1) {
 
         alg1.push_back(node);
 
@@ -206,6 +207,7 @@ void Proj5::q2aAlg(string start, string end) {
     }
 }
 
+// Part B1
 void Proj5::q1(ofstream& outfile) {
 
     vector<string> photoNames;
@@ -270,16 +272,21 @@ void Proj5::q1(ofstream& outfile) {
     for (map<string, vector<string> >::iterator it = setGroups.begin(); it != setGroups.end(); it++) {
         outfile << "Group " << clusterNum++ << " = " << it->second.size() << "; photos: ";
 
-        for (int j = 0; j < (int)it->second.size() - 1; j++)
+        for (int j = 0; j < (int)it->second.size(); j++) {
 
-            outfile << it->second[j] << ", ";
-
+            outfile << it->second[j];
+            
+            if (j < (int)it->second.size() - 1) {
+                 outfile << ", ";
+            }
+        }
     outfile << endl;
 
 
     }
 }
 
+// Part B2a
 void Proj5::q2a(ofstream& outfile) {
     // Test path from d to i via capital a
     outfile << "Algorithm 1: Shortest path from d to i with capital a:" << endl;
@@ -361,9 +368,214 @@ void Proj5::q2a(ofstream& outfile) {
     outfile << endl;
 }
 
+// Part B2b Helper Functions
+void Proj5::q2bAlg(string start, string end) {
+   alg2.clear();
+    
+    runDijkstra(start);
+    if (shortestPaths[capital] == 1e8) {
+        return; 
+    }
+    
+    reconstructPath(start, capital);
+    vector<string> pathToCapital = newPath;
+    
+    map<string, vector<pair<string, int>>> newGraph = stringAdjGraph;
+    removeNodesFromGraph(pathToCapital, newGraph);
+    
+    map<string, int> dist;
+    map<string, string> prev;
+    
+    for (auto& node : newGraph) {
+        dist[node.first] = 1e8;
+    }
+    dist[capital] = 0;
+    
+    priority_queue<pair<int, string>, vector<pair<int, string>>, greater<pair<int, string>>> priorityQueue2;
+    priorityQueue2.push(make_pair(0, capital));
+    
+    while (!priorityQueue2.empty()) {
 
+        pair<int, string> topElement = priorityQueue2.top();
+        int currDist = topElement.first;
+        string currNode = topElement.second;
+        priorityQueue2.pop();
+        
+        if (currDist > dist[currNode]) {
+            continue;
+        }
+        
+        if (newGraph.find(currNode) != newGraph.end()) {
 
-// void Proj5::q2b(ofstream& outfile) {
+            for (auto& neighbor : newGraph[currNode]) {
 
+                string nextNode = neighbor.first;
+                int weight = neighbor.second;
+                int newDist = currDist + weight;
+                
+                if (newDist < dist[nextNode]) {
 
-// }
+                    dist[nextNode] = newDist;
+                    prev[nextNode] = currNode;
+                    priorityQueue2.push(make_pair(newDist, nextNode));
+
+                }
+            }
+        }
+    }
+    
+    vector<string> pathFromCapital;
+    string current = end;
+
+    while (current != capital) {
+
+        pathFromCapital.push_back(current);
+        current = prev[current];
+
+    }
+
+    pathFromCapital.push_back(capital);
+    reverse(pathFromCapital.begin(), pathFromCapital.end());
+    
+    alg2.clear();
+
+    for (auto& node : pathToCapital) {
+        alg2.push_back(node);
+
+    }
+    for (int i = 1; i < (int)pathFromCapital.size(); i++) {
+        alg2.push_back(pathFromCapital[i]);
+    }
+}
+
+void Proj5::removeNodesFromGraph(const vector<string>& nodesToRemove, map<string, vector<pair<string, int>>>& graph) {
+    set<string> nodesToRemoveSet;
+
+    for (auto& node : nodesToRemove) {
+        if (node != capital) {
+
+            nodesToRemoveSet.insert(node);
+            graph.erase(node); 
+
+        }
+    }
+    
+    for (auto& graphEntry : graph) {
+        vector<pair<string, int>>& neighbors = graphEntry.second;
+
+        int writeIndex = 0;
+
+        for (int readIndex = 0; readIndex < (int)neighbors.size(); readIndex++) {
+
+            if (nodesToRemoveSet.find(neighbors[readIndex].first) == nodesToRemoveSet.end()) {
+
+                neighbors[writeIndex] = neighbors[readIndex];
+                writeIndex++;
+
+            }
+        }
+
+        neighbors.resize(writeIndex);
+    }
+}
+
+// Part B2b
+void Proj5::q2b(ofstream& outfile) {
+
+    // Test Algorithm-2: d to i with capital a (no repeats)
+    outfile << "Algorithm 2: Shortest path from d to i with capital a (no repeated cities):" << endl;
+    q2bAlg(sourceNode, destinationNode);
+    
+    if (alg2.empty()) {
+
+        outfile << "No path exists without repeating cities" << endl;
+
+    } else {
+
+        outfile << "Shortest Path: ";
+
+        for (int i = 0; i < (int)alg2.size(); i++) {
+
+            outfile << alg2[i];
+
+            if (i < (int)alg2.size() - 1) {
+
+                outfile << ", ";
+
+            }
+        }
+        outfile << endl;
+        
+        // Calculate total distance
+        int totalDist = 0;
+
+        for (int i = 0; i < (int)alg2.size() - 1; i++) {
+
+            string u = alg2[i];
+            string v = alg2[i + 1];
+
+            for (auto& neighbor : stringAdjGraph[u]) {
+
+                if (neighbor.first == v) {
+
+                    totalDist += neighbor.second;
+                    break;
+
+                }
+            }
+        }
+
+        outfile << "Shortest distance: " << totalDist << endl;
+    }
+
+    outfile << endl;
+
+    // Test Algorithm-2: f to g with capital a (no repeats)
+    outfile << "Algorithm 2: Shortest path from f to g with capital a (no repeated cities):" << endl;
+
+    q2bAlg(sourceNode2, destinationNode2);
+    
+    if (alg2.empty()) {
+
+        outfile << "No path exists without repeating cities" << endl;
+
+    } else {
+
+        outfile << "Shortest Path: ";
+
+        for (int i = 0; i < (int)alg2.size(); i++) {
+
+            outfile << alg2[i];
+
+            if (i < (int)alg2.size() - 1) {
+
+                outfile << ", ";
+
+            }
+        }
+
+        outfile << endl;
+        
+        int totalDist = 0;
+
+        for (int i = 0; i < (int)alg2.size() - 1; i++) {
+
+            string u = alg2[i];
+            string v = alg2[i + 1];
+
+            for (auto& neighbor : stringAdjGraph[u]) {
+
+                if (neighbor.first == v) {
+
+                    totalDist += neighbor.second;
+                    break;
+
+                }
+            }
+        }
+
+        outfile << "Shortest distance: " << totalDist << endl;
+    }
+
+    outfile << endl;
+}
